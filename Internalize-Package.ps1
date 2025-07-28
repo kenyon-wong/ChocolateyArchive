@@ -22,12 +22,12 @@ function Get-ScriptParamValue {
     # 匹配 $variable = 'value' 或 $variable = "value"
     $regex = "(?i)\$${paramName}\s*=\s*['""]([^'""]+)['""]"
     $match = $scriptContent | Select-String -Pattern $regex
-    if ($match) { return $match.Matches.Groups.[1]Value } # <-- 修正了这里的语法
+    if ($match) { return $match.Matches.Groups.[1]Value }
 
     # 匹配 -parameter 'value' 或 -parameter "value"
     $regex = "(?i)-${paramName}\s+['""]?([^'""]+)['""]?"
     $match = $scriptContent | Select-String -Pattern $regex
-    if ($match) { return $match.Matches.Groups.[1]Value } # <-- 修正了这里的语法
+    if ($match) { return $match.Matches.Groups.[1]Value }
     
     return $null
 }
@@ -116,7 +116,7 @@ try {
     # 删除打包时会引起冲突的元数据文件
     Get-ChildItem -Path $unpackedDir -Directory -Filter "_rels" | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
     Get-ChildItem -Path $unpackedDir -Directory -Filter "package" | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
-    Get-ChildItem -Path $unpackedDir -File -Filter "\.xml" | Remove-Item -Force -ErrorAction SilentlyContinue
+    Get-ChildItem -Path $unpackedDir -File -Filter "*.xml" | Remove-Item -Force -ErrorAction SilentlyContinue
 
     choco pack (Join-Path $unpackedDir "*.nuspec") --output-directory $OutputDirectory
 
