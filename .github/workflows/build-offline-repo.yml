@@ -26,7 +26,6 @@ jobs:
       # 确保 Chocolatey CLI 已安装在运行器上
       - name: Install Chocolatey
         run: |
-          Set-ExecutionPolicy Bypass -Scope Process -Force;::SecurityProtocol =::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
           choco --version
 
       # 运行我们的自定义 PowerShell 脚本来批量内部化所有包
