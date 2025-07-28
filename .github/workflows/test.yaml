@@ -238,10 +238,11 @@ jobs:
           "${env:PACKAGE_MANAGER_DIR}.7z" `
           "${env:PACKAGE_MANAGER_DIR}\*"
 
-     - name: Upload Artifact
+    - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: package-manager-archive
-        path: ${{ env.PACKAGE_MANAGER_DIR }}.7z
-        retention-days: 3
-        compression-level: 0
+          name: package-manager-archive
+          path: ${{ env.PACKAGE_MANAGER_DIR }}.7z
+          retention-days: 3
+          compression-level: 0
+        
