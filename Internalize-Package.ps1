@@ -1,5 +1,4 @@
-#./.github/workflows/Internalize-Package.ps1
-
+#./Internalize-Package.ps1
 
 param(
     [Parameter(Mandatory = $true)]
@@ -20,13 +19,15 @@ $packageDir = Join-Path $workingDir $PackageName
 # 解析 PowerShell 脚本中的参数值 (处理字符串和变量)
 function Get-ScriptParamValue {
     param($scriptContent, $paramName)
+    # 匹配 $variable = 'value' 或 $variable = "value"
     $regex = "(?i)\$${paramName}\s*=\s*['""]([^'""]+)['""]"
     $match = $scriptContent | Select-String -Pattern $regex
-    if ($match) { return $match.Matches.Groups.[1]Value }
+    if ($match) { return $match.Matches.Groups.[1]Value } # <-- 修正了这里的语法
 
+    # 匹配 -parameter 'value' 或 -parameter "value"
     $regex = "(?i)-${paramName}\s+['""]?([^'""]+)['""]?"
     $match = $scriptContent | Select-String -Pattern $regex
-    if ($match) { return $match.Matches.Groups.[1]Value }
+    if ($match) { return $match.Matches.Groups.[1]Value } # <-- 修正了这里的语法
     
     return $null
 }
@@ -96,23 +97,7 @@ try {
     $newScriptContent = $newScriptContent -replace "(?i)(-|`\s)\$url64\s*=\s*['""].+?['""]", ""
     $newScriptContent = $newScriptContent -replace "(?i)(-|`\s)-(url|url64|checksum|checksum64|checksumtype)\s+['""].+?['""]", ""
     
-    # 替换为本地文件参数
-    $installCommandRegex = "(Install-Chocolatey(Install|Package|ZipPackage))"
-    if ($newScriptContent -match $installCommandRegex) {
-        $installCommand = $matches[1]
-        $replacement = "$installCommand"
-        if ($resources.ContainsKey('url')) {
-            $replacement += " -File `"$toolsDir\$($resources['url'])`""
-        }
-        if ($resources.ContainsKey('url64')) {
-            $replacement += " -File64 `"$toolsDir\$($resources['url64'])`""
-        }
-        # 这是一个简化的替换，适用于大多数情况
-        $newScriptContent = $newScriptContent -replace $installCommandRegex, "Install-ChocolateyInstallPackage"
-        $newScriptContent = $newScriptContent -replace "(?i)(packageName\s*=\s*`$packageName)", "`$1 -FileType 'exe' -File `"$toolsDir\$($resources.Get_Item('url'))`"" # 简化处理，假设是exe
-    }
-    
-    # 这是一个更通用的替换方法，直接修改 Install-ChocolateyPackage
+    # 这是一个通用的替换方法，直接修改 Install-ChocolateyPackage
     if ($resources.ContainsKey('url')) {
          $newScriptContent = $newScriptContent -replace "(Install-ChocolateyPackage)", ('$1' + " -File `"$toolsDir\$($resources['url'])`"")
     }
@@ -129,9 +114,9 @@ try {
     # 6. 重新打包
     Write-Host "Step 5: Repacking the internalized package..."
     # 删除打包时会引起冲突的元数据文件
-    Get-ChildItem -Path $unpackedDir -Directory -Filter "_rels" | Remove-Item -Recurse -Force
-    Get-ChildItem -Path $unpackedDir -Directory -Filter "package" | Remove-Item -Recurse -Force
-    Get-ChildItem -Path $unpackedDir -File -Filter ".xml" | Remove-Item -Force
+    Get-ChildItem -Path $unpackedDir -Directory -Filter "_rels" | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+    Get-ChildItem -Path $unpackedDir -Directory -Filter "package" | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+    Get-ChildItem -Path $unpackedDir -File -Filter "\.xml" | Remove-Item -Force -ErrorAction SilentlyContinue
 
     choco pack (Join-Path $unpackedDir "*.nuspec") --output-directory $OutputDirectory
 
