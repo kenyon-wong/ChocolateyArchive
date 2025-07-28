@@ -37,11 +37,113 @@ jobs:
         [Environment]::SetEnvironmentVariable("ChocolateyInstall", $customChocoPath, "Machine")
         [Environment]::SetEnvironmentVariable("ChocolateyLastPathUpdate", $customToolsPath, "Machine")
         iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-        choco -v
 
     - name: Install Packages with Chocolatey
       shell: pwsh
       run: |
-        choco install --yes 7zip adb apktool aria2 base64 biome chromedriver cmake codeql colortool curl dismplusplus dos2unix dupeguru etcd Everything exiftool fd ffmpeg Firefox fscapture gawk git-lfs go GoogleChrome gradle grep hashcat imagemagick innounp jadx jq keepass keepassxc kubernetes-cli ldapadmin less make maven nircmd nodejs-lts obsidian office-tool onefetch openhashtab OpenSSL.Light osv-scanner picgo pandoc peazip
-        choco install --yes powertoys python renamer ruby rufus rust rust-msvc rustup-msvc s3browser scoop-search screentogif sed sharex shellcheck snipaste SpaceSniffer spray sqlitestudio ssh-config sslscan sublime-text sudo sumatrapdf sysinternals tableplus touch TrafficMonitor UniGetUI vcredist2010 vcredist2012 vcredist2013 vcredist2022 vim vncviewer vscodium wget which wireshark xmlnotepad yara yarn yq zombie zotero windows-terminal windowsdesktop-runtime-lts PicView
-        choco list
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE 7zip
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE adb
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE apktool
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE aria2
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE base64
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE biome
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE chromedriver
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE cmake
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE codeql
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE colortool
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE curl
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE dismplusplus
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE dos2unix
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE dupeguru
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE etcd
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE Everything
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE exiftool
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE fd
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE ffmpeg
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE Firefox
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE fscapture
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE gawk
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE git-lfs
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE go
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE GoogleChrome
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE gradle
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE grep
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE hashcat
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE imagemagick
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE innounp
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE jadx
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE jq
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE keepass
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE keepassxc
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE kubernetes-cli
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE ldapadmin
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE less
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE make
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE maven
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE nircmd
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE nodejs-lts
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE obsidian
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE office-tool
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE onefetch
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE openhashtab
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE OpenSSL.Light
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE osv-scanner
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE picgo
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE pandoc
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE peazip
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE powertoys
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE python
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE renamer
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE ruby
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE rufus
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE rust
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE rust-msvc
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE rustup-msvc
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE s3browser
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE scoop-search
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE screentogif
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE sed
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE sharex
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE shellcheck
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE snipaste
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE SpaceSniffer
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE spray
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE sqlitestudio
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE ssh-config
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE sslscan
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE sublime-text
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE sudo
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE sumatrapdf
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE sysinternals
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE tableplus
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE touch
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE TrafficMonitor
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE UniGetUI
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE vcredist2010
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE vcredist2012
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE vcredist2013
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE vcredist2022
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE vim
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE vncviewer
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE vscodium
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE wget
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE which
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE wireshark
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE xmlnotepad
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE yara
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE yarn
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE yq
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE zombie
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE zotero
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE windows-terminal
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE windowsdesktop-runtime-lts
+        $env:CHOCOLATEYINSTALL\bin\choco.exe install --yes --cache-location $env:CHOCO_CACHE PicView
+        $env:CHOCOLATEYINSTALL\bin\choco.exe list
+
+    - name: Install Packages with Chocolatey
+      shell: pwsh
+      run: |
+        tree /f $env:CHOCOLATEYINSTALL
+        tree /f $env:CHOCOLATEYLASTPATHUPDATE
+        tree /f $env:PACKAGE_MANAGER_DIR
+        tree /f $env:CHOCO_CACHE
