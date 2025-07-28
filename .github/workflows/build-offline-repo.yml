@@ -1,0 +1,64 @@
+#.github/workflows/build-offline-repo.yml
+
+name: Build Offline Chocolatey Repository (Community Edition)
+
+on:
+  # 允许您从 GitHub Actions 页面手动触发此工作流
+  workflow_dispatch:
+
+  # (可选) 当 packages.txt 文件被修改并推送到 main 分支时自动触发
+  push:
+    branches:
+      - main
+    paths:
+      - 'packages.txt'
+      - 'Internalize-Package.ps1'
+
+jobs:
+  build-portable-repository:
+    runs-on: windows-latest
+
+    steps:
+      # 检出您的代码库，以便访问 packages.txt 和我们的脚本
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 确保 Chocolatey CLI 已安装在运行器上
+      - name: Install Chocolatey
+        run: |
+          Set-ExecutionPolicy Bypass -Scope Process -Force;::SecurityProtocol =::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+          choco --version
+
+      # 运行我们的自定义 PowerShell 脚本来批量内部化所有包
+      - name: Internalize Packages using PowerShell Script
+        shell: powershell
+        run: |
+          # 创建一个目录来存放所有最终的.nupkg 文件
+          $repoDir = "offline-repository"
+          New-Item -ItemType Directory -Path $repoDir -Force
+
+          # 从 packages.txt 读取包列表，并忽略空行和注释
+          $packages = Get-Content -Path "packages.txt" | Where-Object { $_.Trim() -ne "" -and $_ -notlike '#*' }
+
+          foreach ($package in $packages) {
+            $packageName = $package.Trim()
+            Write-Host "=================================================="
+            Write-Host "Processing package: $packageName"
+            Write-Host "=================================================="
+            
+            # 调用我们的核心脚本来执行内部化
+           ./Internalize-Package.ps1 -PackageName $packageName -OutputDirectory $repoDir
+          }
+
+      # 将包含所有.nupkg 文件的文件夹压缩成一个 zip 文件
+      - name: Archive repository folder
+        shell: powershell
+        run: |
+          Compress-Archive -Path./offline-repository/* -DestinationPath offline-choco-repository.zip
+
+      # 上传最终的 zip 文件作为工作流产物
+      - name: Upload Offline Repository Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: offline-choco-repository
+          path: offline-choco-repository.zip
