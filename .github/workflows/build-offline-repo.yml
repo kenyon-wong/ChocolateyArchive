@@ -47,7 +47,7 @@ jobs:
             Write-Host "=================================================="
             
             # 调用我们的核心脚本来执行内部化
-           ./Internalize-Package.ps1 -PackageName $packageName -OutputDirectory $repoDir
+          ./Internalize-Package.ps1 -PackageName $packageName -OutputDirectory $repoDir
           }
 
       # 将包含所有.nupkg 文件的文件夹压缩成一个 zip 文件
