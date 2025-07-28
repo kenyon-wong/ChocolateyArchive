@@ -1,0 +1,47 @@
+name: 🗃️ test Manager Archive
+
+on:
+  workflow_dispatch:
+
+env:
+  PACKAGE_MANAGER_DIR: D:\00PackageManager
+  CHOCO_CACHE: D:\ChocoCache
+  CHOCOLATEYINSTALL: D:\00PackageManager\chocolatey
+  CHOCOLATEYLASTPATHUPDATE: D:\00PackageManager\chocolatey\tools
+
+jobs:
+  build-and-deploy:
+    runs-on: windows-latest
+
+    steps:
+    - name: Check Admin Rights
+      shell: pwsh
+      run: |
+        $isAdmin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+        Write-Host "Is Administrator: $isAdmin"
+
+    - name: Setup Chocolatey
+      shell: pwsh
+      run: |
+        # 创建必要目录
+        New-Item -Path $env:PACKAGE_MANAGER_DIR -ItemType Directory -Force
+        New-Item -Path $env:CHOCO_CACHE -ItemType Directory -Force
+        New-Item -Path $env:CHOCOLATEYINSTALL -ItemType Directory -Force
+        New-Item -Path $env:CHOCOLATEYLASTPATHUPDATE -ItemType Directory -Force
+
+    - name: Install Chocolatey
+      shell: pwsh
+      run: |
+        Set-ExecutionPolicy Bypass -Scope Process -Force;
+        [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072;
+        [Environment]::SetEnvironmentVariable("ChocolateyInstall", $customChocoPath, "Machine")
+        [Environment]::SetEnvironmentVariable("ChocolateyLastPathUpdate", $customToolsPath, "Machine")
+        iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+        choco -v
+
+    - name: Install Packages with Chocolatey
+      shell: pwsh
+      run: |
+        choco install --yes 7zip adb apktool aria2 base64 biome chromedriver cmake codeql colortool curl dismplusplus dos2unix dupeguru etcd Everything exiftool fd ffmpeg Firefox fscapture gawk git-lfs go GoogleChrome gradle grep hashcat imagemagick innounp jadx jq keepass keepassxc kubernetes-cli ldapadmin less make maven nircmd nodejs-lts obsidian office-tool onefetch openhashtab OpenSSL.Light osv-scanner picgo pandoc peazip
+        choco install --yes powertoys python renamer ruby rufus rust rust-msvc rustup-msvc s3browser scoop-search screentogif sed sharex shellcheck snipaste SpaceSniffer spray sqlitestudio ssh-config sslscan sublime-text sudo sumatrapdf sysinternals tableplus touch TrafficMonitor UniGetUI vcredist2010 vcredist2012 vcredist2013 vcredist2022 vim vncviewer vscodium wget which wireshark xmlnotepad yara yarn yq zombie zotero windows-terminal windowsdesktop-runtime-lts PicView
+        choco list
