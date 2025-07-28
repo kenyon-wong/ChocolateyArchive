@@ -47,9 +47,14 @@ jobs:
       shell: pwsh
       run: |
         choco install --yes --cache-location $env:CHOCO_CACHE 7zip
+        choco install --yes --cache-location $env:CHOCO_CACHE 7zip-zstd
+        choco install --yes --cache-location $env:CHOCO_CACHE 7zip.install
         choco install --yes --cache-location $env:CHOCO_CACHE adb
+        choco install --yes --cache-location $env:CHOCO_CACHE anki
         choco install --yes --cache-location $env:CHOCO_CACHE aria2
         choco install --yes --cache-location $env:CHOCO_CACHE autocorrect
+        choco install --yes --cache-location $env:CHOCO_CACHE autohotkey.portable
+        choco install --yes --cache-location $env:CHOCO_CACHE bandizip
         choco install --yes --cache-location $env:CHOCO_CACHE base64
         choco install --yes --cache-location $env:CHOCO_CACHE biome
         choco install --yes --cache-location $env:CHOCO_CACHE burp-suite-pro-edition
@@ -57,6 +62,7 @@ jobs:
         choco install --yes --cache-location $env:CHOCO_CACHE chromedriver
         choco install --yes --cache-location $env:CHOCO_CACHE chsrc
         choco install --yes --cache-location $env:CHOCO_CACHE cmake
+        choco install --yes --cache-location $env:CHOCO_CACHE cmake.install
         choco install --yes --cache-location $env:CHOCO_CACHE codeql
         choco install --yes --cache-location $env:CHOCO_CACHE colortool
         choco install --yes --cache-location $env:CHOCO_CACHE curl
@@ -64,37 +70,52 @@ jobs:
         choco install --yes --cache-location $env:CHOCO_CACHE dark
         choco install --yes --cache-location $env:CHOCO_CACHE dismplusplus
         choco install --yes --cache-location $env:CHOCO_CACHE dos2unix
+        choco install --yes --cache-location $env:CHOCO_CACHE dotnet-9.0-desktopruntime
+        choco install --yes --cache-location $env:CHOCO_CACHE dotnet-9.0-sdk
+        choco install --yes --cache-location $env:CHOCO_CACHE dotnet-9.0-sdk-3xx
+        choco install --yes --cache-location $env:CHOCO_CACHE dotnet-desktopruntime
+        choco install --yes --cache-location $env:CHOCO_CACHE dotnet-sdk
         choco install --yes --cache-location $env:CHOCO_CACHE dotnet-sdk-lts
         choco install --yes --cache-location $env:CHOCO_CACHE dotnet3-sdk
+        choco install --yes --cache-location $env:CHOCO_CACHE dotnet3.5
+        choco install --yes --cache-location $env:CHOCO_CACHE dotnetfx
         choco install --yes --cache-location $env:CHOCO_CACHE dupeguru
-        choco install --yes --cache-location $env:CHOCO_CACHE dupeGuru
         choco install --yes --cache-location $env:CHOCO_CACHE etcd
-        choco install --yes --cache-location $env:CHOCO_CACHE Everything
-        choco install --yes --cache-location $env:CHOCO_CACHE everything-cli
+        choco install --yes --cache-location $env:CHOCO_CACHE everything
         choco install --yes --cache-location $env:CHOCO_CACHE exiftool
         choco install --yes --cache-location $env:CHOCO_CACHE fd
         choco install --yes --cache-location $env:CHOCO_CACHE ffmpeg
         choco install --yes --cache-location $env:CHOCO_CACHE ffuf
-        choco install --yes --cache-location $env:CHOCO_CACHE Firefox
-        choco install --yes --cache-location $env:CHOCO_CACHE firefox
+        choco install --yes --cache-location $env:CHOCO_CACHE firefoxesr
         choco install --yes --cache-location $env:CHOCO_CACHE fscapture
         choco install --yes --cache-location $env:CHOCO_CACHE gawk
         choco install --yes --cache-location $env:CHOCO_CACHE git
         choco install --yes --cache-location $env:CHOCO_CACHE git-cliff
         choco install --yes --cache-location $env:CHOCO_CACHE git-lfs
-        choco install --yes --cache-location $env:CHOCO_CACHE go
-        choco install --yes --cache-location $env:CHOCO_CACHE GoogleChrome
-        choco install --yes --cache-location $env:CHOCO_CACHE gpg
+        choco install --yes --cache-location $env:CHOCO_CACHE git-lfs.install
+        choco install --yes --cache-location $env:CHOCO_CACHE git.install
+        choco install --yes --cache-location $env:CHOCO_CACHE golang
+        choco install --yes --cache-location $env:CHOCO_CACHE googlechrome
         choco install --yes --cache-location $env:CHOCO_CACHE gradle
         choco install --yes --cache-location $env:CHOCO_CACHE grep
         choco install --yes --cache-location $env:CHOCO_CACHE hadolint
         choco install --yes --cache-location $env:CHOCO_CACHE hashcat
         choco install --yes --cache-location $env:CHOCO_CACHE honeyview
+        choco install --yes --cache-location $env:CHOCO_CACHE honeyview.install
         choco install --yes --cache-location $env:CHOCO_CACHE imagemagick
+        choco install --yes --cache-location $env:CHOCO_CACHE imagemagick.app
         choco install --yes --cache-location $env:CHOCO_CACHE innounp
         choco install --yes --cache-location $env:CHOCO_CACHE jadx
+        choco install --yes --cache-location $env:CHOCO_CACHE javaruntime
         choco install --yes --cache-location $env:CHOCO_CACHE jenv
         choco install --yes --cache-location $env:CHOCO_CACHE jq
+        choco install --yes --cache-location $env:CHOCO_CACHE kb2919355
+        choco install --yes --cache-location $env:CHOCO_CACHE kb2919442
+        choco install --yes --cache-location $env:CHOCO_CACHE kb2999226
+        choco install --yes --cache-location $env:CHOCO_CACHE kb3033929
+        choco install --yes --cache-location $env:CHOCO_CACHE kb3035131
+        choco install --yes --cache-location $env:CHOCO_CACHE keepass
+        choco install --yes --cache-location $env:CHOCO_CACHE keepass.install
         choco install --yes --cache-location $env:CHOCO_CACHE keepassxc
         choco install --yes --cache-location $env:CHOCO_CACHE kubernetes-cli
         choco install --yes --cache-location $env:CHOCO_CACHE ldapadmin
@@ -106,23 +127,31 @@ jobs:
         choco install --yes --cache-location $env:CHOCO_CACHE make
         choco install --yes --cache-location $env:CHOCO_CACHE maven
         choco install --yes --cache-location $env:CHOCO_CACHE microsoft-windows-terminal
+        choco install --yes --cache-location $env:CHOCO_CACHE mysql-cli
         choco install --yes --cache-location $env:CHOCO_CACHE nircmd
         choco install --yes --cache-location $env:CHOCO_CACHE nodejs-lts
+        choco install --yes --cache-location $env:CHOCO_CACHE nssm
         choco install --yes --cache-location $env:CHOCO_CACHE nuget
         choco install --yes --cache-location $env:CHOCO_CACHE obsidian
         choco install --yes --cache-location $env:CHOCO_CACHE office-tool
         choco install --yes --cache-location $env:CHOCO_CACHE onefetch
         choco install --yes --cache-location $env:CHOCO_CACHE openhashtab
-        choco install --yes --cache-location $env:CHOCO_CACHE OpenSSL.Light
+        choco install --yes --cache-location $env:CHOCO_CACHE openssl.light
         choco install --yes --cache-location $env:CHOCO_CACHE oss-browser
         choco install --yes --cache-location $env:CHOCO_CACHE osv-scanner
         choco install --yes --cache-location $env:CHOCO_CACHE pandoc
         choco install --yes --cache-location $env:CHOCO_CACHE peazip
+        choco install --yes --cache-location $env:CHOCO_CACHE peazip.install
         choco install --yes --cache-location $env:CHOCO_CACHE picgo
-        choco install --yes --cache-location $env:CHOCO_CACHE PicView
+        choco install --yes --cache-location $env:CHOCO_CACHE picview
         choco install --yes --cache-location $env:CHOCO_CACHE powertoys
         choco install --yes --cache-location $env:CHOCO_CACHE python
+        choco install --yes --cache-location $env:CHOCO_CACHE python3
+        choco install --yes --cache-location $env:CHOCO_CACHE python313
+        choco install --yes --cache-location $env:CHOCO_CACHE remove-empty-directories
         choco install --yes --cache-location $env:CHOCO_CACHE renamer
+        choco install --yes --cache-location $env:CHOCO_CACHE renamer.install
+        choco install --yes --cache-location $env:CHOCO_CACHE rsync
         choco install --yes --cache-location $env:CHOCO_CACHE ruby
         choco install --yes --cache-location $env:CHOCO_CACHE rufus
         choco install --yes --cache-location $env:CHOCO_CACHE rust
@@ -136,26 +165,42 @@ jobs:
         choco install --yes --cache-location $env:CHOCO_CACHE shellcheck
         choco install --yes --cache-location $env:CHOCO_CACHE snipaste
         choco install --yes --cache-location $env:CHOCO_CACHE sourcegit
-        choco install --yes --cache-location $env:CHOCO_CACHE SpaceSniffer
+        choco install --yes --cache-location $env:CHOCO_CACHE spacesniffer
         choco install --yes --cache-location $env:CHOCO_CACHE sqlitestudio
+        choco install --yes --cache-location $env:CHOCO_CACHE ssh-copy-id
         choco install --yes --cache-location $env:CHOCO_CACHE sslscan
-        choco install --yes --cache-location $env:CHOCO_CACHE sublime-text
+        choco install --yes --cache-location $env:CHOCO_CACHE sublimetext4
         choco install --yes --cache-location $env:CHOCO_CACHE sudo
         choco install --yes --cache-location $env:CHOCO_CACHE sumatrapdf
         choco install --yes --cache-location $env:CHOCO_CACHE sysinternals
         choco install --yes --cache-location $env:CHOCO_CACHE tableplus
+        choco install --yes --cache-location $env:CHOCO_CACHE tinytex
         choco install --yes --cache-location $env:CHOCO_CACHE touch
-        choco install --yes --cache-location $env:CHOCO_CACHE TrafficMonitor
-        choco install --yes --cache-location $env:CHOCO_CACHE UniGetUI
+        choco install --yes --cache-location $env:CHOCO_CACHE trafficmonitor
+        choco install --yes --cache-location $env:CHOCO_CACHE unigetui
+        choco install --yes --cache-location $env:CHOCO_CACHE vcredist-all
+        choco install --yes --cache-location $env:CHOCO_CACHE vcredist140
+        choco install --yes --cache-location $env:CHOCO_CACHE vcredist2005
+        choco install --yes --cache-location $env:CHOCO_CACHE vcredist2008
         choco install --yes --cache-location $env:CHOCO_CACHE vcredist2010
         choco install --yes --cache-location $env:CHOCO_CACHE vcredist2012
         choco install --yes --cache-location $env:CHOCO_CACHE vcredist2013
+        choco install --yes --cache-location $env:CHOCO_CACHE vcredist2015
+        choco install --yes --cache-location $env:CHOCO_CACHE vcredist2017
         choco install --yes --cache-location $env:CHOCO_CACHE vcredist2022
+        choco install --yes --cache-location $env:CHOCO_CACHE veracrypt
         choco install --yes --cache-location $env:CHOCO_CACHE vim
-        choco install --yes --cache-location $env:CHOCO_CACHE vncviewer
+        choco install --yes --cache-location $env:CHOCO_CACHE visualstudio-installer
+        choco install --yes --cache-location $env:CHOCO_CACHE visualstudio2017buildtools
+        choco install --yes --cache-location $env:CHOCO_CACHE visualstudio2019-workload-vctools
+        choco install --yes --cache-location $env:CHOCO_CACHE visualstudio2019buildtools
+        choco install --yes --cache-location $env:CHOCO_CACHE visualstudio2022buildtools
+        choco install --yes --cache-location $env:CHOCO_CACHE vnc-viewer
         choco install --yes --cache-location $env:CHOCO_CACHE vscodium
+        choco install --yes --cache-location $env:CHOCO_CACHE vscodium.install
         choco install --yes --cache-location $env:CHOCO_CACHE wget
         choco install --yes --cache-location $env:CHOCO_CACHE which
+        choco install --yes --cache-location $env:CHOCO_CACHE windows-sdk-10.1
         choco install --yes --cache-location $env:CHOCO_CACHE wireshark
         choco install --yes --cache-location $env:CHOCO_CACHE xmlnotepad
         choco install --yes --cache-location $env:CHOCO_CACHE yara
@@ -175,3 +220,28 @@ jobs:
         tree /f $env:CHOCOLATEYLASTPATHUPDATE
         tree /f $env:PACKAGE_MANAGER_DIR
         tree /f $env:CHOCO_CACHE
+
+    - name: Compress Directory
+      shell: pwsh
+      run: |
+        # 使用系统自带的 7-Zip
+        $7zPath = "${env:ProgramFiles}\7-Zip\7z.exe"
+        if (-not (Test-Path $7zPath)) {
+          throw "7-Zip not found. Ensure it's installed by Chocolatey."
+        }
+
+        & $7zPath a `
+          -t7z `
+          -mx9 `
+          -snh `
+          -snl `
+          "${env:PACKAGE_MANAGER_DIR}.7z" `
+          "${env:PACKAGE_MANAGER_DIR}\*"
+
+     - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: package-manager-archive
+        path: ${{ env.PACKAGE_MANAGER_DIR }}.7z
+        retention-days: 3
+        compression-level: 0
