@@ -1,4 +1,4 @@
-name: 🗃️ test Manager Archive
+name: 📦 Windows Package Manager Archive
 
 on:
   workflow_dispatch:
@@ -8,22 +8,110 @@ env:
   CHOCO_CACHE: D:\ChocoCache
   CHOCOLATEYINSTALL: D:\00PackageManager\chocolatey
   CHOCOLATEYLASTPATHUPDATE: D:\00PackageManager\chocolateytools
+  SCOOP_DIR: D:\00PackageManager\Scoop
 
 jobs:
-  build-and-deploy:
+  # ------------------------
+  # 1. Scoop 构建与归档
+  # ------------------------
+  scoop-build:
     runs-on: windows-latest
-
     steps:
-    - name: Check Admin Rights
+    - name: Setup Scoop
       shell: pwsh
       run: |
-        $isAdmin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
-        Write-Host "Is Administrator: $isAdmin"
+        mkdir $env:SCOOP_DIR
+        $env:SCOOP=$env:SCOOP_DIR
+        [Environment]::SetEnvironmentVariable('SCOOP', $env:SCOOP, 'User')
+        Set-ExecutionPolicy RemoteSigned -scope CurrentUser 
+        iwr -useb get.scoop.sh | iex
+        scoop bucket add extras
+        scoop bucket add versions
+        scoop bucket add nirsoft
+        scoop bucket add java
+        scoop bucket add nonportable
+        scoop bucket add ktools https://github.com/kenyon-wong/ktools
+        echo "$env:SCOOP\shims" >> $env:GITHUB_PATH
 
+    - name: Setup Scoop aria2
+      shell: pwsh 
+      run: |
+        scoop install -k aria2 sudo git 7zip
+        scoop config aria2-enabled true
+        scoop config aria2-split 16
+        scoop config aria2-max-connection-per-server 16
+        scoop config aria2-min-split-size 4M
+
+    - name: Install Base Utilities
+      shell: pwsh 
+      run: |
+        scoop install -k innounp dark
+        scoop install -k biome jq yq vim curl wget base64 gawk grep sed less touch which cwrsync cacert openssl-lts-light autocorrect fd
+
+    - name: Install Runtimes & Dev Toolchains
+      shell: pwsh 
+      run: |
+        scoop install -k liberica-full-lts-jdk liberica11-full-jdk liberica16-full-jdk liberica17-full-jdk liberica8-full-jdk
+        scoop install -k gradle maven jenv
+        scoop install -k python nodejs-lts rust rust-msvc rustup-msvc go dotnet-sdk-lts dotnet3-sdk nuget
+
+    - name: Install Editors & IDEs
+      shell: pwsh
+      run: |
+        scoop install -k idea-ultimate vscode extras/sublime-text obsidian xmlnotepad sumatrapdf sourcegit gui-for-clash
+        scoop install -k extras/tableplus masscode UniGetUI windows-terminal
+
+    - name: Install Security Tools
+      shell: pwsh
+      run: |
+        scoop install -k nonportable/burp-suite-pro-np@2024.5
+        scoop install -k codeql osv-scanner jadx ffmpeg yara
+        scoop install -k gogo spray zombie fscan pdtm ffuf fofax netspy ksubdomain chsrc crawlergo
+        scoop install -k apktool blueteamtools hashcat sqlmap
+
+    - name: Install Database & Ops Tools
+      shell: pwsh
+      run: |
+        scoop install -k keepassxc openark kubectl sslscan sqlitestudio keepass-plugin-keepassrpc etcd
+        scoop install -k redis another-redis-desktop-manager office-tool-plus oss-browser
+
+    - name: Install Utility Software
+      shell: pwsh
+      run: |
+        scoop install -k dupeGuru dismplusplus renamer everything everything-cli powertoys TrafficMonitor snipaste vncviewer sysinternals
+        scoop install -k adb firefox googlechrome honeyview imagemagick screentogif sharex SpaceSniffer wireshark windowsdesktop-runtime-lts
+        scoop install -k chromedriver peazip rufus pdfpatcher picgo pixpin rad foxmail fscapture goby zotero
+        scoop install -k vcredist2010 vcredist2012 vcredist2013 vcredist2022
+
+    - name: Cleanup Scoop Cache
+      shell: pwsh
+      run: |
+        scoop cache rm *
+        scoop cleanup -k *
+
+    - name: Compress Scoop Directory
+      shell: pwsh
+      run: |
+        $7z="$env:SCOOP_DIR\apps\7zip\current\7z.exe"
+        & $7z a -mx9 -t7z "${env:PACKAGE_MANAGER_DIR}-scoop.7z" "${env:SCOOP_DIR}\*"
+
+    - name: Upload Scoop Archive
+      uses: actions/upload-artifact@v4
+      with:
+        name: scoop-archive
+        path: ${{ env.PACKAGE_MANAGER_DIR }}-scoop.7z
+        retention-days: 3
+        compression-level: 0
+
+  # ------------------------
+  # 2. Chocolatey 构建与归档
+  # ------------------------
+  choco-build:
+    runs-on: windows-latest
+    steps:
     - name: Setup Chocolatey
       shell: pwsh
       run: |
-        # 创建必要目录
         New-Item -Path $env:PACKAGE_MANAGER_DIR -ItemType Directory -Force
         New-Item -Path $env:CHOCO_CACHE -ItemType Directory -Force
         New-Item -Path $env:CHOCOLATEYINSTALL -ItemType Directory -Force
@@ -32,83 +120,50 @@ jobs:
     - name: Install Chocolatey
       shell: pwsh
       run: |
-        Set-ExecutionPolicy Bypass -Scope Process -Force;
-        [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072;
-        [Environment]::SetEnvironmentVariable("ChocolateyInstall", $customChocoPath, "Machine")
-        [Environment]::SetEnvironmentVariable("ChocolateyLastPathUpdate", $customToolsPath, "Machine")
+        Set-ExecutionPolicy Bypass -Scope Process -Force
         iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-
-    - name: show config with Chocolatey
-      shell: pwsh
-      run: |
-        choco config
 
     - name: Install Packages with Chocolatey
       shell: pwsh
       run: |
         choco install --yes --cache-location $env:CHOCO_CACHE ./package.config
 
-    - name: show list with Chocolatey
+    - name: Compress Chocolatey Directories
       shell: pwsh
       run: |
-        choco list
-        choco export
+        $7z="${env:ProgramFiles}\7-Zip\7z.exe"
+        & $7z a -mx9 -t7z "${env:PACKAGE_MANAGER_DIR}-choco.7z" "${env:PACKAGE_MANAGER_DIR}\*"
+        & $7z a -mx9 -t7z "${env:CHOCO_CACHE}.7z" "${env:CHOCO_CACHE}\*"
 
-    - name: Install Packages with Chocolatey
-      shell: pwsh
-      run: |
-        tree /f $env:CHOCOLATEYINSTALL
-        tree /f $env:CHOCOLATEYLASTPATHUPDATE
-        tree /f $env:PACKAGE_MANAGER_DIR
-        tree /f $env:CHOCO_CACHE
-
-    - name: Upload export List
+    - name: Upload Choco Archives
       uses: actions/upload-artifact@v4
       with:
-          name: packages.config
-          path: packages.config
-          retention-days: 3
-          compression-level: 0
+        name: choco-manager-archive
+        path: ${{ env:PACKAGE_MANAGER_DIR }}-choco.7z
+        retention-days: 3
+        compression-level: 0
 
-    - name: Compress Directory
-      shell: pwsh
-      run: |
-        # 使用系统自带的 7-Zip
-        $7zPath = "${env:ProgramFiles}\7-Zip\7z.exe"
-        if (-not (Test-Path $7zPath)) {
-          throw "7-Zip not found. Ensure it's installed by Chocolatey."
-        }
-
-        & $7zPath a `
-          -t7z `
-          -mx9 `
-          -snh `
-          -snl `
-          "${env:PACKAGE_MANAGER_DIR}.7z" `
-          "${env:PACKAGE_MANAGER_DIR}\*"
-
-        & $7zPath a `
-          -t7z `
-          -mx9 `
-          -snh `
-          -snl `
-          "${env:CHOCO_CACHE}.7z" `
-          "${env:CHOCO_CACHE}\*"
-
-
-    - name: Upload Artifact
+    - name: Upload Choco Cache
       uses: actions/upload-artifact@v4
       with:
-          name: package-manager-archive
-          path: ${{ env.PACKAGE_MANAGER_DIR }}.7z
-          retention-days: 3
-          compression-level: 0
+        name: choco-cache-archive
+        path: ${{ env:CHOCO_CACHE }}.7z
+        retention-days: 3
+        compression-level: 0
 
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v4
-      with:
-          name: package-cache-archive
-          path: ${{ env.CHOCO_CACHE }}.7z
-          retention-days: 3
-          compression-level: 0
-                
+  # ------------------------
+  # 3. Finalize 汇总
+  # ------------------------
+  finalize:
+    runs-on: ubuntu-latest
+    needs: 
+      - scoop-build
+      - choco-build
+    steps:
+      - name: Report
+        run: |
+          echo "✅ Scoop 和 Chocolatey 构建已完成"
+          echo "Artifacts 可在 Actions 页面下载："
+          echo "- scoop-archive"
+          echo "- choco-manager-archive"
+          echo "- choco-cache-archive"
