@@ -84,7 +84,7 @@ jobs:
       run: |
         scoop install -k dupeGuru dismplusplus renamer everything-cli
         scoop install -k adb honeyview imagemagick screentogif sharex SpaceSniffer
-        scoop install -k chromedriver pdfpatcher pixpin rad fscapture goby 
+        scoop install -k chromedriver pixpin rad fscapture goby
 
     - name: Cleanup Scoop Cache
       shell: pwsh
