@@ -142,7 +142,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: choco-manager-archive
-        path: ${{ env:PACKAGE_MANAGER_DIR }}-choco.7z
+        path: ${{ env.PACKAGE_MANAGER_DIR }}-choco.7z
         retention-days: 3
         compression-level: 0
 
@@ -150,7 +150,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: choco-cache-archive
-        path: ${{ env:CHOCO_CACHE }}.7z
+        path: ${{ env.CHOCO_CACHE }}.7z
         retention-days: 3
         compression-level: 0
 
