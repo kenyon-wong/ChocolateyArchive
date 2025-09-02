@@ -3,12 +3,13 @@ name: 📦 Windows Package Manager Archive
 on:
   workflow_dispatch:
 
-env:
-  PACKAGE_MANAGER_DIR: D:\00PackageManager
-  CHOCO_CACHE: D:\ChocoCache
-  CHOCOLATEYINSTALL: D:\00PackageManager\chocolatey
-  CHOCOLATEYLASTPATHUPDATE: D:\00PackageManager\chocolateytools
-  SCOOP_DIR: D:\00PackageManager\Scoop
+# 全局环境变量
+env: 
+  PACKAGE_MANAGER_DIR: "D:\\00PackageManager"
+  CHOCO_CACHE: "D:\\00PackageManager\\ChocoCache"
+  CHOCOLATEYINSTALL: "D:\\00PackageManager\\chocolatey"
+  CHOCOLATEYLASTPATHUPDATE: "D:\\00PackageManager\\chocolateytools"
+  SCOOP_DIR: "D:\\00PackageManager\\Scoop"
 
 jobs:
   # ------------------------
