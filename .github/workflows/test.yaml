@@ -68,7 +68,7 @@ jobs:
         scoop install -k nonportable/burp-suite-pro-np@2024.5
         scoop install -k codeql osv-scanner jadx ffmpeg yara
         scoop install -k gogo spray zombie fscan pdtm ffuf fofax netspy ksubdomain chsrc crawlergo
-        scoop install -k apktool blueteamtools hashcat sqlmap
+        scoop install -k apktool blueteamtools hashcat 
 
     - name: Install Database & Ops Tools
       shell: pwsh
@@ -130,8 +130,6 @@ jobs:
     - name: Install Packages with Chocolatey
       shell: pwsh
       run: |
-        pwd
-        dir
         choco install --yes --cache-location $env:CHOCO_CACHE ./package.config
 
     - name: Compress Chocolatey Directories
