@@ -110,6 +110,9 @@ jobs:
   choco-build:
     runs-on: windows-latest
     steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+    
     - name: Setup Chocolatey
       shell: pwsh
       run: |
