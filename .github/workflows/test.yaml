@@ -18,6 +18,9 @@ jobs:
   scoop-build:
     runs-on: windows-latest
     steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
     - name: Setup Scoop
       shell: pwsh
       run: |
@@ -47,42 +50,41 @@ jobs:
       shell: pwsh 
       run: |
         scoop install -k innounp dark
-        scoop install -k biome jq yq vim curl wget base64 gawk grep sed less touch which cwrsync cacert openssl-lts-light autocorrect fd
+        scoop install -k jq yq vim curl wget base64 gawk grep sed less touch which cwrsync cacert autocorrect fd
 
     - name: Install Runtimes & Dev Toolchains
       shell: pwsh 
       run: |
         scoop install -k liberica-full-lts-jdk liberica11-full-jdk liberica16-full-jdk liberica17-full-jdk liberica8-full-jdk
         scoop install -k gradle maven jenv
-        scoop install -k python nodejs-lts rust rust-msvc rustup-msvc go dotnet-sdk-lts dotnet3-sdk nuget
+        scoop install -k python nodejs-lts go nuget
 
     - name: Install Editors & IDEs
       shell: pwsh
       run: |
-        scoop install -k idea-ultimate vscode extras/sublime-text obsidian xmlnotepad sumatrapdf sourcegit gui-for-clash
-        scoop install -k extras/tableplus masscode UniGetUI windows-terminal
+        scoop install -k gui-for-clash
+        scoop install -k extras/tableplus UniGetUI 
 
     - name: Install Security Tools
       shell: pwsh
       run: |
-        scoop install -k nonportable/burp-suite-pro-np@2024.5
-        scoop install -k codeql osv-scanner jadx ffmpeg yara
+        scoop install -k nonportable/burp-suite-pro-np
+        scoop install -k codeql osv-scanner jadx yara
         scoop install -k gogo spray zombie fscan pdtm ffuf fofax netspy ksubdomain chsrc crawlergo
-        scoop install -k apktool blueteamtools hashcat 
+        scoop install -k apktool blueteamtools hashcat
 
     - name: Install Database & Ops Tools
       shell: pwsh
       run: |
-        scoop install -k keepassxc openark kubectl sslscan sqlitestudio keepass-plugin-keepassrpc etcd
-        scoop install -k redis another-redis-desktop-manager office-tool-plus oss-browser
+        scoop install -k openark kubectl sslscan sqlitestudio etcd
+        scoop install -k office-tool-plus oss-browser
 
     - name: Install Utility Software
       shell: pwsh
       run: |
-        scoop install -k dupeGuru dismplusplus renamer everything everything-cli powertoys TrafficMonitor snipaste vncviewer sysinternals
-        scoop install -k adb firefox googlechrome honeyview imagemagick screentogif sharex SpaceSniffer wireshark windowsdesktop-runtime-lts
-        scoop install -k chromedriver peazip rufus pdfpatcher picgo pixpin rad foxmail fscapture goby zotero
-        scoop install -k vcredist2010 vcredist2012 vcredist2013 vcredist2022
+        scoop install -k dupeGuru dismplusplus renamer everything-cli
+        scoop install -k adb honeyview imagemagick screentogif sharex SpaceSniffer
+        scoop install -k chromedriver pdfpatcher pixpin rad fscapture goby 
 
     - name: Cleanup Scoop Cache
       shell: pwsh
@@ -112,7 +114,7 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
-    
+
     - name: Setup Chocolatey
       shell: pwsh
       run: |
@@ -130,6 +132,8 @@ jobs:
     - name: Install Packages with Chocolatey
       shell: pwsh
       run: |
+        pwd
+        dir
         choco install --yes --cache-location $env:CHOCO_CACHE ./package.config
 
     - name: Compress Chocolatey Directories
