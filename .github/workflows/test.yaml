@@ -126,6 +126,8 @@ jobs:
     - name: Install Packages with Chocolatey
       shell: pwsh
       run: |
+        pwd
+        dir
         choco install --yes --cache-location $env:CHOCO_CACHE ./package.config
 
     - name: Compress Chocolatey Directories
